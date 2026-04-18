@@ -1,0 +1,17 @@
+{
+  "name": "echo",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run dist/index.js",
+    "build": "bun build src/index.ts --minify --target bun --outdir dist"
+  },
+  "dependencies": {
+    "elysia": "latest",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "utils-services",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --filter ./apps/* --parallel dev",
+    "start": "bun run --filter ./apps/* --parallel start",
+    "build": "bun run --filter ./apps/* build"
+  },
+  "workspaces": {
+    "packages": [
+      "apps/*"
+    ],
+    "catalog": {
+      "@types/bun": "latest",
+      "typescript": "^6"
+    }
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:"
+  },
+  "peerDependencies": {
+    "typescript": "catalog:"
+  }
+}
