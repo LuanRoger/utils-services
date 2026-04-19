@@ -1,0 +1,19 @@
+{
+  "name": "@utils/todo",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run dist/index.js",
+    "build": "bun build src/index.ts --minify --target bun --outdir dist",
+    "env:load": "varlock load"
+  },
+  "dependencies": {
+    "elysia": "latest",
+    "varlock": "catalog:",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bun": "catalog:",
+    "typescript": "catalog:"
+  }
+}
