@@ -1,0 +1,2 @@
+preload = ["varlock/auto-load"]
+env = false

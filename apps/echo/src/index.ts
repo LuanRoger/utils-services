@@ -1,11 +1,10 @@
+import { ENV } from "varlock/env";
 import { Elysia } from "elysia";
 import z from "zod";
 
-const hostname = process.env.HOST || "0.0.0.0";
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
-const maxEchoTextLenght = process.env.MAX_ECHO_TEXT_LENGH
-  ? parseInt(process.env.MAX_ECHO_TEXT_LENGH)
-  : 500;
+const hostname = ENV.HOST || "0.0.0.0";
+const port = ENV.PORT || 8080;
+const maxEchoTextLenght = ENV.MAX_ECHO_TEXT_LENGH || 500;
 
 const app = new Elysia()
   .get("/", ({ status }) => status(200, "OK"))

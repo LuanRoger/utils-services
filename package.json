@@ -4,17 +4,18 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "bun run --filter ./apps/* --parallel dev",
-    "start": "bun run --filter ./apps/* --parallel start",
-    "build": "bun run --filter ./apps/* build"
+    "dev": "bun run --filter './apps/*' --parallel dev",
+    "start": "bun run --filter './apps/*' --parallel start",
+    "build": "bun run --filter './apps/*' build"
   },
   "workspaces": {
     "packages": [
       "apps/*"
     ],
     "catalog": {
+      "typescript": "^6",
       "@types/bun": "latest",
-      "typescript": "^6"
+      "varlock": "^0.9.0"
     }
   },
   "devDependencies": {
