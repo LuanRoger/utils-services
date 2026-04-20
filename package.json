@@ -5,6 +5,7 @@
     "dev": "bun run --filter './apps/*' --parallel dev",
     "start": "bun run --filter './apps/*' --parallel start",
     "build": "bun run --filter './apps/*' build",
+    "env:load": "bun run --filter './apps/*' env:load",
     "check": "ultracite check",
     "fix": "ultracite fix"
   },
