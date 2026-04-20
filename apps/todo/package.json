@@ -5,15 +5,20 @@
     "dev": "bun run --watch src/index.ts",
     "start": "bun run dist/index.js",
     "build": "bun build src/index.ts --minify --target bun --outdir dist",
+    "db:push": "varlock run -- drizzle-kit push",
+    "db:studio": "varlock run -- drizzle-kit studio",
     "env:load": "varlock load"
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.2",
     "elysia": "latest",
     "varlock": "catalog:",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/bun": "catalog:",
+    "drizzle-kit": "^0.31.10",
+    "pg": "^8.20.0",
     "typescript": "catalog:"
   }
 }
