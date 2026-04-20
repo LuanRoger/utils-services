@@ -1,12 +1,12 @@
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
-import {
+import { todo } from "@/db/schemas/todo";
+import { TodoNotFoundError } from "./errors";
+import type {
   CreateTodoModel,
   ToggleTodoStatusModel,
   UpdateTodoModel,
 } from "./models";
-import { todo } from "@/db/schemas/todo";
-import { eq } from "drizzle-orm";
-import { TodoNotFoundError } from "./errors";
 
 export async function getTodoById(id: number) {
   const result = await db.query.todo.findFirst({
@@ -40,7 +40,7 @@ export async function updateTodo(id: number, model: UpdateTodoModel) {
 
 export async function toggleTodoStatus(
   id: number,
-  model?: ToggleTodoStatusModel,
+  model?: ToggleTodoStatusModel
 ) {
   const { completed } = model || {};
 
@@ -54,7 +54,7 @@ export async function toggleTodoStatus(
     }
 
     const currentStatus = existingTodo.completed;
-    const newStatus = completed !== undefined ? completed : !currentStatus;
+    const newStatus = completed === undefined ? !currentStatus : completed;
 
     const updatedTodo = await tx
       .update(todo)

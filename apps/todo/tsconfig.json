@@ -7,9 +7,9 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
     "strict": true,
-    "skipLibCheck": true,
-  },
+    "skipLibCheck": true
+  }
 }

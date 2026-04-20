@@ -7,7 +7,7 @@ export class TodoNotFoundError extends Error {
 
 export class TodoCreationError extends Error {
   constructor() {
-    super(`Failed to create todo`);
+    super("Failed to create todo");
     this.name = "TodoCreationError";
   }
 }

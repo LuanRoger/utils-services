@@ -1,5 +1,5 @@
-import { ENV } from "varlock/env";
 import { defineConfig } from "drizzle-kit";
+import { ENV } from "varlock/env";
 
 export default defineConfig({
   out: "./drizzle",

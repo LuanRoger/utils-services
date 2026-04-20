@@ -1,5 +1,5 @@
-import { ENV } from "varlock/env";
 import { Elysia } from "elysia";
+import { ENV } from "varlock/env";
 import z from "zod";
 
 const hostname = ENV.HOST || "0.0.0.0";
@@ -20,10 +20,10 @@ const app = new Elysia()
       query: z.object({
         text: z.string().min(1, "Text is required").max(maxEchoTextLenght),
       }),
-    },
+    }
   )
   .listen({ hostname, port });
 
 console.log(
-  `🦊 Server is running at ${app.server?.hostname}:${app.server?.port}`,
+  `🦊 Server is running at ${app.server?.hostname}:${app.server?.port}`
 );

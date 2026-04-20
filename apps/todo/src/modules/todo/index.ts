@@ -1,5 +1,10 @@
-import { serialIdSchema } from "@/commons/models";
 import Elysia from "elysia";
+import { serialIdSchema } from "@/commons/models";
+import {
+  TodoCreationError,
+  TodoNotFoundError,
+  TodoUpdateError,
+} from "./errors";
 import {
   createTodo,
   deleteTodo,
@@ -8,11 +13,6 @@ import {
   toggleTodoStatus,
   updateTodo,
 } from "./handlers";
-import {
-  TodoCreationError,
-  TodoNotFoundError,
-  TodoUpdateError,
-} from "./errors";
 import {
   createTodoModel,
   toggleTodoStatusModel,
@@ -54,7 +54,7 @@ export const TodoModule = new Elysia({ prefix: "/todos" })
     },
     {
       params: serialIdSchema,
-    },
+    }
   )
   .post(
     "/",
@@ -69,7 +69,7 @@ export const TodoModule = new Elysia({ prefix: "/todos" })
     },
     {
       body: createTodoModel,
-    },
+    }
   )
   .put(
     "/:id",
@@ -84,7 +84,7 @@ export const TodoModule = new Elysia({ prefix: "/todos" })
       const updatedTodo = result[0];
       return status("OK", updatedTodo);
     },
-    { params: serialIdSchema, body: updateTodoModel },
+    { params: serialIdSchema, body: updateTodoModel }
   )
   .patch(
     "/:id",
@@ -99,7 +99,7 @@ export const TodoModule = new Elysia({ prefix: "/todos" })
       const updatedTodo = result[0];
       return status("OK", updatedTodo);
     },
-    { params: serialIdSchema, body: toggleTodoStatusModel },
+    { params: serialIdSchema, body: toggleTodoStatusModel }
   )
   .delete(
     "/:id",
@@ -117,5 +117,5 @@ export const TodoModule = new Elysia({ prefix: "/todos" })
     },
     {
       params: serialIdSchema,
-    },
+    }
   );
