@@ -58,7 +58,9 @@ export async function toggleTodoStatus(
 
   const result = await db.transaction(async (tx) => {
     const existingTodo = await tx.query.todo.findFirst({
-      where: (todo, { eq }) => eq(todo.id, id),
+      where: {
+        id,
+      },
     });
 
     if (!existingTodo) {
