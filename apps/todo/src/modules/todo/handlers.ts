@@ -4,20 +4,32 @@ import { todo } from "@/db/schemas/todo";
 import { TodoNotFoundError } from "./errors";
 import type {
   CreateTodoModel,
+  GetAllTodosQueryModel,
   ToggleTodoStatusModel,
   UpdateTodoModel,
 } from "./models";
 
 export async function getTodoById(id: number) {
   const result = await db.query.todo.findFirst({
-    where: (todo, { eq }) => eq(todo.id, id),
+    where: {
+      id
+    },
   });
 
   return result;
 }
 
-export async function getAllTodos() {
-  const result = await db.query.todo.findMany();
+export async function getAllTodos(query: GetAllTodosQueryModel) {
+  const { page, pageSize = 10, completed, orderBy } = query;
+
+  const result = await db.query.todo.findMany({
+    where: {
+      completed: completed === "true" ? true : completed === "false" ? false : undefined,
+    },
+    orderBy: { [orderBy || "createdAt"]: "desc" },
+    offset: page ? (page - 1) * pageSize : undefined,
+    limit: pageSize,
+  });
 
   return result;
 }
