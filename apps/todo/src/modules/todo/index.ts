@@ -15,30 +15,23 @@ import {
 } from "./handlers";
 import {
   createTodoModel,
+  getAllTodosQueryModel,
   toggleTodoStatusModel,
   updateTodoModel,
 } from "./models";
 
 export const TodoModule = new Elysia({ prefix: "/todos" })
-  .error({
-    TODO_NOT_FOUND: TodoNotFoundError,
-    TODO_CREATION_ERROR: TodoCreationError,
-    TODO_UPDATE_ERROR: TodoUpdateError,
-  })
   .onError(({ status, code, error }) => {
-    switch (code) {
-      case "TODO_NOT_FOUND":
-        return status(404, { message: error.message });
-      case "TODO_CREATION_ERROR":
-        return status(500, { message: error.message });
-      case "TODO_UPDATE_ERROR":
-        return status(500, { message: error.message });
+    if (code === "INTERNAL_SERVER_ERROR") {
+      return status("Internal Server Error", { message: error.message });
     }
   })
-  .get("/", async ({ status }) => {
-    const result = await getAllTodos();
+  .get("/", async ({ status, query }) => {
+    const result = await getAllTodos(query);
 
     return status("OK", result);
+  }, {
+    query: getAllTodosQueryModel
   })
   .get(
     "/:id",
