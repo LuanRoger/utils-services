@@ -10,14 +10,14 @@
     "env:load": "varlock load"
   },
   "dependencies": {
-    "drizzle-orm": "^0.45.2",
+    "drizzle-orm": "^1.0.0-beta.22",
     "elysia": "latest",
     "varlock": "catalog:",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/bun": "catalog:",
-    "drizzle-kit": "^0.31.10",
+    "drizzle-kit": "^1.0.0-beta.22",
     "pg": "^8.20.0",
     "typescript": "catalog:"
   }

@@ -1,5 +1,11 @@
 import { drizzle } from "drizzle-orm/bun-sql";
 import { ENV } from "varlock/env";
-import { schema } from "./schemas";
+import { relations } from "./relations";
+import { SQL } from "bun";
 
-export const db = drizzle(ENV.DATABASE_URL, { schema });
+const client = new SQL({
+  url: ENV.DATABASE_URL,
+  idleTimeout: 10,
+  connectionTimeout: 30,
+})
+export const db = drizzle({ client, relations });
