@@ -1,13 +1,3 @@
-export interface PropertiesOptions {
-  rowIdColumnName: string;
-  properties: Properties;
-}
-
-export interface PagePropertyIdentifier {
-  rowId: string;
-  rowIdColumnName: string;
-}
-
 interface BaseProperty {
   name: string;
 }

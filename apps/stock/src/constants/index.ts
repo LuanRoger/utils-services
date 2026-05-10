@@ -1,9 +1,17 @@
 import type { PropertiesNameOption } from "@/models/properties-options";
-import { type TimeZone } from "@repo/shared/types";
-
-export const PROMISE_LIST_EXECUTION_DELAY_MS = 300;
 
 export const DEFAULT_PORT = 3001;
+
+export const APP_RESPONSES = {
+  SECRET_NOT_SET: "Secret not set",
+  OK: "OK",
+};
+
+export const APP_MESSAGES = {
+  CLOSSING_REDIS_CONNECTION: "Closing Redis connection",
+  REDIS_CONNECTION_STRING_NOT_SET: "Redis connection string not set",
+  CLOSSING_SERVER: "Closing server",
+};
 
 export const DEFAULT_PAGE_PROPERTIES_NAME: PropertiesNameOption = {
   actualValue: "Valor Atual",
@@ -17,17 +25,6 @@ export const DEFAULT_PAGE_PROPERTIES_NAME: PropertiesNameOption = {
   nextYieldBasePrice: "Próximo Rendimento Preço Base",
   nextYieldDate: "Próximo Rendimento Data",
   pvp: "P/VP",
-};
-
-export const APP_RESPONSES = {
-  SECRET_NOT_SET: "Secret not set",
-  OK: "OK",
-};
-
-export const APP_MESSAGES = {
-  CLOSSING_REDIS_CONNECTION: "Closing Redis connection",
-  REDIS_CONNECTION_STRING_NOT_SET: "Redis connection string not set",
-  CLOSSING_SERVER: "Closing server",
 };
 
 export const FI_STORE_KEY = "fi";
