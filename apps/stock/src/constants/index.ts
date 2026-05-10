@@ -19,8 +19,6 @@ export const DEFAULT_PAGE_PROPERTIES_NAME: PropertiesNameOption = {
   pvp: "P/VP",
 };
 
-export const DEFAULT_NOTION_COLUMN_ID_NAME = "Nome do FII";
-
 export const APP_RESPONSES = {
   SECRET_NOT_SET: "Secret not set",
   OK: "OK",
@@ -31,8 +29,6 @@ export const APP_MESSAGES = {
   REDIS_CONNECTION_STRING_NOT_SET: "Redis connection string not set",
   CLOSSING_SERVER: "Closing server",
 };
-
-export const DEFAULT_NOTION_DATE_TIMEZONE: TimeZone = "America/Sao_Paulo";
 
 export const FI_STORE_KEY = "fi";
 export const FIAGRO_STORE_KEY = "fiagro";
