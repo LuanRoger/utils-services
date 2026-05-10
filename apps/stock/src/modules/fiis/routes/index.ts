@@ -1,5 +1,5 @@
 import { getFiById as getFiiByIdStatusInvest } from "@/use-casses/status-invest/fiis";
-import { FiNotFound } from "@/models/errors";
+import { FiiNotFound } from "../errors";
 import Elysia from "elysia";
 import { getFiByIdSchema } from "@/shared/schemas";
 
@@ -13,7 +13,7 @@ app.get("/:id", async ({ status, params }) => {
 
     return status("OK", fii);
   } catch (e) {
-    if (e instanceof FiNotFound) {
+    if (e instanceof FiiNotFound) {
       return status("Not Found");
     }
   }
