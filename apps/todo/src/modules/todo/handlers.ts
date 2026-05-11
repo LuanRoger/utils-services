@@ -12,7 +12,7 @@ import type {
 export async function getTodoById(id: number) {
   const result = await db.query.todo.findFirst({
     where: {
-      id
+      id,
     },
   });
 
@@ -22,9 +22,16 @@ export async function getTodoById(id: number) {
 export async function getAllTodos(query: GetAllTodosQueryModel) {
   const { page, pageSize = 10, completed, orderBy } = query;
 
+  let completedFilter: boolean | undefined;
+  if (completed === "true") {
+    completedFilter = true;
+  } else if (completed === "false") {
+    completedFilter = false;
+  }
+
   const result = await db.query.todo.findMany({
     where: {
-      completed: completed === "true" ? true : completed === "false" ? false : undefined,
+      completed: completedFilter,
     },
     orderBy: { [orderBy || "createdAt"]: "desc" },
     offset: page ? (page - 1) * pageSize : undefined,

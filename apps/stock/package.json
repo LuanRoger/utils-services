@@ -1,0 +1,19 @@
+{
+  "name": "@utils/stock",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "varlock run -- bun run dist/index.js",
+    "build": "bun build src/index.ts --target bun --outdir dist",
+    "env:load": "varlock load"
+  },
+  "dependencies": {
+    "elysia": "^1.4.28",
+    "node-html-parser": "^7.0.1",
+    "varlock": "catalog:",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "@types/bun": "^1.3.13"
+  }
+}

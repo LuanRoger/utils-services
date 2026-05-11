@@ -7,12 +7,15 @@ export class TodoNotFoundError extends Error {
   }
 
   toResponse() {
-    return Response.json({
-      error: this.message,
-			code: this.status
-    }, {
-      status: this.status,
-    })
+    return Response.json(
+      {
+        error: this.message,
+        code: this.status,
+      },
+      {
+        status: this.status,
+      }
+    );
   }
 }
 
@@ -25,12 +28,15 @@ export class TodoCreationError extends Error {
   }
 
   toResponse() {
-    return Response.json({
-      error: this.message,
-			code: this.status
-    }, {
-      status: this.status,
-    })
+    return Response.json(
+      {
+        error: this.message,
+        code: this.status,
+      },
+      {
+        status: this.status,
+      }
+    );
   }
 }
 
@@ -43,12 +49,15 @@ export class TodoUpdateError extends Error {
   }
 
   toResponse() {
-    return Response.json({
-      error: this.message,
-			code: this.status
-    }, {
-      status: this.status,
-    })
+    return Response.json(
+      {
+        error: this.message,
+        code: this.status,
+      },
+      {
+        status: this.status,
+      }
+    );
   }
 }
 
@@ -61,11 +70,14 @@ export class TodoDatabaseError extends Error {
   }
 
   toResponse() {
-    return Response.json({
-      error: this.message,
-      code: this.status
-    }, {
-      status: this.status,
-    })
+    return Response.json(
+      {
+        error: this.message,
+        code: this.status,
+      },
+      {
+        status: this.status,
+      }
+    );
   }
 }

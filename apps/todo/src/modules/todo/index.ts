@@ -26,13 +26,17 @@ export const TodoModule = new Elysia({ prefix: "/todos" })
       return status("Internal Server Error", { message: error.message });
     }
   })
-  .get("/", async ({ status, query }) => {
-    const result = await getAllTodos(query);
+  .get(
+    "/",
+    async ({ status, query }) => {
+      const result = await getAllTodos(query);
 
-    return status("OK", result);
-  }, {
-    query: getAllTodosQueryModel
-  })
+      return status("OK", result);
+    },
+    {
+      query: getAllTodosQueryModel,
+    }
+  )
   .get(
     "/:id",
     async ({ params, status }) => {
