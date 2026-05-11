@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "bun run dist/index.js",
-    "build": "bun build src/index.ts --minify --target bun --outdir dist",
+    "build": "bun build src/index.ts --target bun --outdir dist",
     "db:push": "varlock run -- drizzle-kit push",
     "db:studio": "varlock run -- drizzle-kit studio",
     "env:load": "varlock load"

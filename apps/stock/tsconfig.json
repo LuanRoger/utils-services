@@ -6,6 +6,11 @@
     "types": [
       "bun"
     ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
