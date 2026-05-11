@@ -1,7 +1,7 @@
 export interface FiiData {
-  name: string;
   actualValue: number;
   dividendYield: number;
+  name: string;
   pvp: number;
   segment?: string;
   yield: {

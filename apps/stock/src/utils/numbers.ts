@@ -1,12 +1,12 @@
 export function parseNumber(value: string | undefined): number | undefined {
   if (!value) {
-    return undefined;
+    return;
   }
 
   const sanitizedValue = value.replace(",", ".");
-  const parsedValue = parseFloat(sanitizedValue);
+  const parsedValue = Number.parseFloat(sanitizedValue);
   if (isNaN(parsedValue)) {
-    return undefined;
+    return;
   }
 
   return parsedValue;

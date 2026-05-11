@@ -1,9 +1,9 @@
-import { CACHE_DURATION } from "@/constants";
-import { dateReviver } from "@/utils/date";
 import { RedisClient } from "bun";
 import { ENV } from "varlock/env";
+import { CACHE_DURATION } from "@/constants";
+import { dateReviver } from "@/utils/date";
 
-const cacheClient = new RedisClient(ENV.REDIS_URL)
+const cacheClient = new RedisClient(ENV.REDIS_URL);
 
 export async function getValueCache<T>(key: string): Promise<T | null> {
   const value = await cacheClient.get(key);

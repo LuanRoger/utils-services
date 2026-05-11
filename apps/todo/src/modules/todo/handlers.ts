@@ -12,7 +12,7 @@ import type {
 export async function getTodoById(id: number) {
   const result = await db.query.todo.findFirst({
     where: {
-      id
+      id,
     },
   });
 
@@ -24,7 +24,8 @@ export async function getAllTodos(query: GetAllTodosQueryModel) {
 
   const result = await db.query.todo.findMany({
     where: {
-      completed: completed === "true" ? true : completed === "false" ? false : undefined,
+      completed:
+        completed === "true" ? true : completed === "false" ? false : undefined,
     },
     orderBy: { [orderBy || "createdAt"]: "desc" },
     offset: page ? (page - 1) * pageSize : undefined,

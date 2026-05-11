@@ -1,18 +1,18 @@
 export function parseDate(value: string | undefined): Date | undefined {
   if (!value) {
-    return undefined;
+    return;
   }
 
-  const [day, month, year] = value.split("/").map((v) => parseInt(v));
+  const [day, month, year] = value.split("/").map((v) => Number.parseInt(v));
   const isDateUndefined =
     day === undefined || month === undefined || year === undefined;
   if (isDateUndefined) {
-    return undefined;
+    return;
   }
 
   const isAnyDatePartNaN = isNaN(day) || isNaN(month) || isNaN(year);
   if (isDateUndefined || isAnyDatePartNaN) {
-    return undefined;
+    return;
   }
 
   return new Date(year, month - 1, day);

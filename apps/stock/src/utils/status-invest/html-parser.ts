@@ -1,13 +1,13 @@
-import type { FiiData } from "@/shared/models/fii";
+import type { HTMLElement } from "node-html-parser";
 import {
   STATUS_INVEST_CLASS_SELECTORS,
   STATUS_INVEST_NOT_FOUND_PAGE_ELEMENT,
   STATUS_INVEST_NOT_FOUND_PAGE_TEXT,
 } from "@/services/status-invest/constants";
+import { FiiNotFoundRule, FiiParseError } from "@/shared/errors";
+import type { FiiData } from "@/shared/models/fii";
 import { parseDate } from "@/utils/date";
 import { parseNumber } from "@/utils/numbers";
-import { FiiNotFoundRule, FiiParseError } from "@/shared/errors";
-import type { HTMLElement } from "node-html-parser";
 
 export function parseFiiPage(page: HTMLElement): FiiData {
   const name = page.querySelector(
@@ -58,7 +58,7 @@ export function parseFiiPage(page: HTMLElement): FiiData {
     throw new FiiNotFoundRule();
   }
 
-  if (!name || !actualValue || !dividendYield) {
+  if (!(name && actualValue && dividendYield)) {
     throw new FiiParseError();
   }
 

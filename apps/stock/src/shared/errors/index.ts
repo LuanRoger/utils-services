@@ -12,12 +12,12 @@ export class FiiHasInvalidData extends Error {
 
 export class FiiParseError extends Error {
   constructor() {
-    super(`FII parse error`);
+    super("FII parse error");
   }
 }
 
 export class FiiNotFoundRule extends Error {
   constructor() {
-    super(`FII not found rule`);
+    super("FII not found rule");
   }
 }

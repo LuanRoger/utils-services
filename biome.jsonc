@@ -3,7 +3,7 @@
   "extends": ["ultracite/biome/core"],
   "files": {
     "ignoreUnknown": true,
-    "includes": ["!**/.d.ts"]
+    "includes": ["**", "!**/*.d.ts"]
   },
   "linter": {
     "rules": {
