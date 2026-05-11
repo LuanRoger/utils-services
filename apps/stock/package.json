@@ -1,5 +1,5 @@
 {
-  "name": "stock",
+  "name": "@utils/stock",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "start": "varlock run -- bun run dist/index.js",
