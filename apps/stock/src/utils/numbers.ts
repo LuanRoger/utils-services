@@ -5,7 +5,7 @@ export function parseNumber(value: string | undefined): number | undefined {
 
   const sanitizedValue = value.replace(",", ".");
   const parsedValue = Number.parseFloat(sanitizedValue);
-  if (isNaN(parsedValue)) {
+  if (Number.isNaN(parsedValue)) {
     return;
   }
 

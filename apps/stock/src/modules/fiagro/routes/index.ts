@@ -1,7 +1,7 @@
 import Elysia from "elysia";
 import { FiiNotFound } from "@/shared/errors";
 import { getFiByIdSchema } from "@/shared/schemas";
-import * as useCases from "../use-cases";
+import { getFiagroById as getFiagroByIdUseCase } from "../use-cases";
 
 const app = new Elysia({ prefix: "/fiagro" });
 
@@ -11,7 +11,7 @@ app.get(
     const { id: fiiId } = params;
 
     try {
-      const fii = await useCases.getFiagroById(fiiId);
+      const fii = await getFiagroByIdUseCase(fiiId);
 
       return status("OK", fii);
     } catch (e) {

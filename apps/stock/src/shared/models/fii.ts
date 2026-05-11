@@ -1,4 +1,4 @@
-export interface FiiData {
+export type FiiData = {
   actualValue: number;
   dividendYield: number;
   name: string;
@@ -18,4 +18,4 @@ export interface FiiData {
       date: Date;
     };
   };
-}
+};
