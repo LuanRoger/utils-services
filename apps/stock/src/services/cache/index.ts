@@ -1,9 +1,12 @@
 import { CACHE_DURATION } from "@/constants";
 import { dateReviver } from "@/utils/date";
-import { redis } from "bun";
+import { RedisClient } from "bun";
+import { ENV } from "varlock/env";
+
+const cacheClient = new RedisClient(ENV.REDIS_URL)
 
 export async function getValueCache<T>(key: string): Promise<T | null> {
-  const value = await redis.get(key);
+  const value = await cacheClient.get(key);
   if (!value) {
     return null;
   }
@@ -14,5 +17,5 @@ export async function getValueCache<T>(key: string): Promise<T | null> {
 
 export async function setValueCache(key: string, value: unknown) {
   const jsonValue = JSON.stringify(value);
-  await redis.set(key, jsonValue, "EX", CACHE_DURATION);
+  await cacheClient.set(key, jsonValue, "EX", CACHE_DURATION);
 }

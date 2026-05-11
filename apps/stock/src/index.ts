@@ -1,16 +1,17 @@
 import FiisRoutes from "./modules/fiis/routes";
 import FiagroRoutes from "./modules/fiagro/routes";
-import { DEFAULT_PORT } from "./constants";
-import { parseNumber } from "./utils/numbers";
 import Elysia from "elysia";
+import { ENV } from "varlock/env";
+
+const hostname = ENV.HOST || "0.0.0.0";
+const port = ENV.PORT || 8082;
 
 const app = new Elysia()
 
 app.use(FiisRoutes)
 app.use(FiagroRoutes)
 
-const port = parseNumber(process.env.PORT) ?? DEFAULT_PORT;
-app.listen(port)
+app.listen({ hostname, port })
 
 console.log(
   `🦊 Server is running at ${app.server?.hostname}:${app.server?.port}`
