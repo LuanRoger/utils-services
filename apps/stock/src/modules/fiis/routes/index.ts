@@ -1,5 +1,5 @@
-import { getFiById as getFiiByIdStatusInvest } from "@/use-casses/status-invest/fiis";
-import { FiiNotFound } from "../errors";
+import * as useCases from "../use-cases";
+import { FiiNotFound } from "@/shared/errors";
 import Elysia from "elysia";
 import { getFiByIdSchema } from "@/shared/schemas";
 
@@ -9,7 +9,7 @@ app.get("/:id", async ({ status, params }) => {
   const { id: fiiId } = params;
 
   try {
-    const fii = await getFiiByIdStatusInvest(fiiId);
+    const fii = await useCases.getFiiById(fiiId);
 
     return status("OK", fii);
   } catch (e) {

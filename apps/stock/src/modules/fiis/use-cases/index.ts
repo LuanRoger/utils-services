@@ -1,12 +1,12 @@
 import { FI_STORE_KEY } from "@/constants";
-import { FiiHasInvalidData, FiiNotFound, FiiNotFoundRule } from "@/models/errors";
+import { FiiHasInvalidData, FiiNotFound, FiiNotFoundRule } from "@/shared/errors";
 import type { FiiData } from "@/shared/models/fii";
 import { getFiiById as getFiiByIdStatusInvest } from "@/services";
 import { getValueCache, setValueCache } from "@/services/cache";
 import { createCacheKey } from "@/utils/cache";
 import { parseFiPage } from "@/utils/status-invest/html-parser";
 
-export async function getFiById(id: string) {
+export async function getFiiById(id: string) {
   let fiData: FiiData | null = null;
   const cacheKey = createCacheKey(FI_STORE_KEY, id);
   fiData = await getValueCache<FiiData>(cacheKey);
