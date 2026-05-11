@@ -6,10 +6,10 @@ import {
 } from "@/services/status-invest/constants";
 import { parseDate } from "@/utils/date";
 import { parseNumber } from "@/utils/numbers";
-import { FiiNotFoundRule, FiiParseError } from "@/models/errors";
+import { FiiNotFoundRule, FiiParseError } from "@/shared/errors";
 import type { HTMLElement } from "node-html-parser";
 
-export function parseFiPage(page: HTMLElement): FiiData {
+export function parseFiiPage(page: HTMLElement): FiiData {
   const name = page.querySelector(
     STATUS_INVEST_CLASS_SELECTORS.NAME
   )?.innerText;

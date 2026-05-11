@@ -1,10 +1,10 @@
 import { FIAGRO_STORE_KEY } from "@/constants";
 import { FiiHasInvalidData, FiiNotFound, FiiNotFoundRule } from "@/shared/errors";
 import type { FiiData } from "@/shared/models/fii";
-import { getFiagroById as getFiagroByIdStatusInvest } from "@/services";
+import { getFiagroById as getFiagroByIdStatusInvest } from "@/services/status-invest";
 import { getValueCache, setValueCache } from "@/services/cache";
 import { createCacheKey } from "@/utils/cache";
-import { parseFiPage } from "@/utils/status-invest/html-parser";
+import { parseFiiPage } from "@/utils/status-invest/html-parser";
 
 export async function getFiagroById(id: string) {
   let fiData: FiiData | null = null;
@@ -16,7 +16,7 @@ export async function getFiagroById(id: string) {
 
   const page = await getFiagroByIdStatusInvest(id);
   try {
-    fiData = parseFiPage(page);
+    fiData = parseFiiPage(page);
     await setValueCache(cacheKey, fiData);
   } catch (error) {
     if (error instanceof FiiNotFoundRule) {

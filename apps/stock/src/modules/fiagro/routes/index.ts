@@ -1,6 +1,6 @@
-import { FiiNotFound } from "@/models/errors";
+import { FiiNotFound } from "@/shared/errors";
 import { getFiByIdSchema } from "@/shared/schemas";
-import { getFiagroById } from "@/use-casses/status-invest/fiagro";
+import * as useCases from "../use-cases";
 import Elysia from "elysia";
 
 const app = new Elysia({ prefix: "/fiagro" })
@@ -9,7 +9,7 @@ app.get("/:id", async ({ status, params }) => {
   const { id: fiiId } = params;
 
   try {
-    const fii = await getFiagroById(fiiId);
+    const fii = await useCases.getFiagroById(fiiId);
 
     return status("OK", fii);
   } catch (e) {
