@@ -7,8 +7,13 @@
     "env:load": "varlock load"
   },
   "dependencies": {
+    "@elysia/bearer": "catalog:web-api",
+    "@elysia/cors": "catalog:web-api",
+    "@elysia/server-timing": "catalog:web-api",
     "elysia": "^1.4.28",
+    "elysia-rate-limit": "catalog:web-api",
     "node-html-parser": "^7.0.1",
+    "logixlysia": "catalog:web-api",
     "varlock": "catalog:",
     "zod": "^4.4.3"
   },

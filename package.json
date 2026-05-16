@@ -1,6 +1,7 @@
 {
   "name": "utils-services",
   "type": "module",
+  "private": true,
   "scripts": {
     "dev": "bun run --filter './apps/*' --parallel dev",
     "start": "bun run --filter './apps/*' --parallel start",
@@ -25,8 +26,15 @@
       "typescript": "^6",
       "@types/bun": "latest",
       "varlock": "^0.9.0"
+    },
+    "catalogs": {
+      "web-api": {
+        "@elysia/bearer": "^1.4.4",
+        "@elysia/cors": "^1.4.2",
+        "@elysia/server-timing": "^1.4.1",
+        "elysia-rate-limit": "^4.6.2",
+        "logixlysia": "^6.3.2"
+      }
     }
-  },
-  "module": "index.ts",
-  "private": true
+  }
 }

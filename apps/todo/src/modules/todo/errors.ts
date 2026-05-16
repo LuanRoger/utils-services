@@ -5,18 +5,6 @@ export class TodoNotFoundError extends Error {
     super(`Todo with id ${id} not found`);
     this.name = "TodoNotFoundError";
   }
-
-  toResponse() {
-    return Response.json(
-      {
-        error: this.message,
-        code: this.status,
-      },
-      {
-        status: this.status,
-      }
-    );
-  }
 }
 
 export class TodoCreationError extends Error {
@@ -25,18 +13,6 @@ export class TodoCreationError extends Error {
   constructor() {
     super("Failed to create todo");
     this.name = "TodoCreationError";
-  }
-
-  toResponse() {
-    return Response.json(
-      {
-        error: this.message,
-        code: this.status,
-      },
-      {
-        status: this.status,
-      }
-    );
   }
 }
 
@@ -47,18 +23,6 @@ export class TodoUpdateError extends Error {
     super(`Failed to update todo with id ${id}`);
     this.name = "TodoUpdateError";
   }
-
-  toResponse() {
-    return Response.json(
-      {
-        error: this.message,
-        code: this.status,
-      },
-      {
-        status: this.status,
-      }
-    );
-  }
 }
 
 export class TodoDatabaseError extends Error {
@@ -67,17 +31,5 @@ export class TodoDatabaseError extends Error {
   constructor(message: string) {
     super(`Database error: ${message}`);
     this.name = "TodoDatabaseError";
-  }
-
-  toResponse() {
-    return Response.json(
-      {
-        error: this.message,
-        code: this.status,
-      },
-      {
-        status: this.status,
-      }
-    );
   }
 }

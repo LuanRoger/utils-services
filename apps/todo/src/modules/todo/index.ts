@@ -20,12 +20,7 @@ import {
   updateTodoModel,
 } from "./models";
 
-export const TodoModule = new Elysia({ prefix: "/todos" })
-  .onError(({ status, code, error }) => {
-    if (code === "INTERNAL_SERVER_ERROR") {
-      return status("Internal Server Error", { message: error.message });
-    }
-  })
+const todoRoutes = new Elysia({ prefix: "/todos" })
   .get(
     "/",
     async ({ status, query }) => {
@@ -116,3 +111,5 @@ export const TodoModule = new Elysia({ prefix: "/todos" })
       params: serialIdSchema,
     }
   );
+
+export default todoRoutes;
