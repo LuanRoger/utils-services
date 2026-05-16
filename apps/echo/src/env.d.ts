@@ -7,6 +7,12 @@
 /* eslint-disable */
 export type CoercedEnvSchema = {
   /**
+   * **APP_ENV**  
+   * ![icon](data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23808080%22%20d%3D%22M7.885%2010.23L12%203.463l4.116%206.769zm9.606%2011q-1.558%200-2.64-1.081t-1.082-2.64t1.082-2.649t2.64-1.09t2.649%201.09t1.09%202.649t-1.09%202.64t-2.649%201.082m-13.722-.5v-6.462h6.462v6.462z%22%2F%3E%3C%2Fsvg%3E)   
+   */
+  APP_ENV?: "local" | "production";
+  
+  /**
    * **HOST**  
    * ![icon](data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23808080%22%20stroke-width%3D%221.5%22%3E%3Cpath%20d%3D%22M2%2015V9a6%206%200%200%201%206-6h8a6%206%200%200%201%206%206v6a6%206%200%200%201-6%206H8a6%206%200%200%201-6-6Z%22%2F%3E%3Cpath%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20d%3D%22M12%209v6M9%209v6m3-3h2.5a1.5%201.5%200%200%200%201.5-1.5v0A1.5%201.5%200%200%200%2014.5%209H12%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E)   
    */
@@ -25,6 +31,18 @@ export type CoercedEnvSchema = {
   API_KEY: string;
   
   /**
+   * **RATE_LIMIT_DURATION**  
+   * ![icon](data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23808080%22%20d%3D%22M26%2012h-4v2h4v2h-3v2h3v2h-4v2h4a2.003%202.003%200%200%200%202-2v-6a2%202%200%200%200-2-2m-7%2010h-6v-4a2%202%200%200%201%202-2h2v-2h-4v-2h4a2%202%200%200%201%202%202v2a2%202%200%200%201-2%202h-2v2h4ZM8%2020v-8H6v1H4v2h2v5H4v2h6v-2z%22%2F%3E%3C%2Fsvg%3E)   
+   */
+  RATE_LIMIT_DURATION?: number;
+  
+  /**
+   * **RATE_LIMIT_MAX**  
+   * ![icon](data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23808080%22%20d%3D%22M26%2012h-4v2h4v2h-3v2h3v2h-4v2h4a2.003%202.003%200%200%200%202-2v-6a2%202%200%200%200-2-2m-7%2010h-6v-4a2%202%200%200%201%202-2h2v-2h-4v-2h4a2%202%200%200%201%202%202v2a2%202%200%200%201-2%202h-2v2h4ZM8%2020v-8H6v1H4v2h2v5H4v2h6v-2z%22%2F%3E%3C%2Fsvg%3E)   
+   */
+  RATE_LIMIT_MAX?: number;
+  
+  /**
    * **MAX_ECHO_TEXT_LENGH**  
    * ![icon](data:image/svg+xml;utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23808080%22%20d%3D%22M26%2012h-4v2h4v2h-3v2h3v2h-4v2h4a2.003%202.003%200%200%200%202-2v-6a2%202%200%200%200-2-2m-7%2010h-6v-4a2%202%200%200%201%202-2h2v-2h-4v-2h4a2%202%200%200%201%202%202v2a2%202%200%200%201-2%202h-2v2h4ZM8%2020v-8H6v1H4v2h2v5H4v2h6v-2z%22%2F%3E%3C%2Fsvg%3E)   
    */
@@ -32,11 +50,11 @@ export type CoercedEnvSchema = {
   
 };
 
-type _CoercedEnvSchema_48d25480 = CoercedEnvSchema;
+type _CoercedEnvSchema_b424fef8 = CoercedEnvSchema;
 
 declare module 'varlock/env' {
-  export interface TypedEnvSchema extends Readonly<_CoercedEnvSchema_48d25480> {}
-  export interface PublicTypedEnvSchema extends Readonly<Pick<_CoercedEnvSchema_48d25480, 'HOST' | 'PORT' | 'MAX_ECHO_TEXT_LENGH'>> {}
+  export interface TypedEnvSchema extends Readonly<_CoercedEnvSchema_b424fef8> {}
+  export interface PublicTypedEnvSchema extends Readonly<Pick<_CoercedEnvSchema_b424fef8, 'APP_ENV' | 'HOST' | 'PORT' | 'RATE_LIMIT_DURATION' | 'RATE_LIMIT_MAX' | 'MAX_ECHO_TEXT_LENGH'>> {}
 }
 
 
@@ -46,17 +64,17 @@ export type EnvSchemaAsStrings = {
       : (CoercedEnvSchema[Property] extends boolean ? ('true' | 'false') : string)
 };
 
-type _EnvSchemaAsStrings_48d25480 = EnvSchemaAsStrings;
+type _EnvSchemaAsStrings_b424fef8 = EnvSchemaAsStrings;
 declare global {
 
   // add types for global import.meta.env
-  interface ImportMetaEnv extends _EnvSchemaAsStrings_48d25480 {}
+  interface ImportMetaEnv extends _EnvSchemaAsStrings_b424fef8 {}
   interface ImportMeta {
     readonly env: ImportMetaEnv;
   }
 
   // add types for global process.env
   namespace NodeJS {
-    interface ProcessEnv extends _EnvSchemaAsStrings_48d25480 {}
+    interface ProcessEnv extends _EnvSchemaAsStrings_b424fef8 {}
   }
 }
