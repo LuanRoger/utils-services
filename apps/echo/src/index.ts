@@ -1,29 +1,45 @@
+import bearer from "@elysia/bearer";
+import { cors } from "@elysia/cors";
+import serverTiming from "@elysia/server-timing";
 import { Elysia } from "elysia";
-import { ENV } from "varlock/env";
-import z from "zod";
+import logixlysia from "logixlysia";
+import { ENV } from "varlock";
+import { echoRoutes } from "./modules/echo/routes";
 
 const hostname = ENV.HOST || "0.0.0.0";
 const port = ENV.PORT || 8080;
-const maxEchoTextLenght = ENV.MAX_ECHO_TEXT_LENGH || 500;
 
 const app = new Elysia()
-  .get("/", ({ status }) => status(200, "OK"))
-  .get(
-    "/echo",
-    ({ query, status }) => {
-      const text = query.text;
-      console.log({ endpoint: "/echo", text });
-
-      return status(200, { text });
-    },
-    {
-      query: z.object({
-        text: z.string().min(1, "Text is required").max(maxEchoTextLenght),
-      }),
-    }
+  .use(
+    logixlysia({
+      config: {
+        service: "@utils/echo",
+        showStartupMessage: true,
+        startupMessageFormat: "simple",
+        showContextTree: true,
+        contextDepth: 2,
+        slowThreshold: 50,
+        verySlowThreshold: 100,
+        ip: false,
+      },
+    })
   )
-  .listen({ hostname, port });
+  .use(
+    cors({
+      allowedHeaders: ["Content-Type", "Authorization"],
+      methods: ["GET", "OPTIONS"],
+    })
+  )
+  .use(serverTiming())
+  .use(bearer())
+  .onBeforeHandle(({ status, bearer }) => {
+    const apiKey = ENV.API_KEY;
 
-console.log(
-  `🦊 Server is running at ${app.server?.hostname}:${app.server?.port}`
-);
+    if (bearer !== apiKey) {
+      return status("Unauthorized");
+    }
+  })
+  .use(echoRoutes)
+  .get("/", ({ status }) => status(200, "OK"));
+
+app.listen({ hostname, port });

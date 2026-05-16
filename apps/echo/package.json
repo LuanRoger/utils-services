@@ -8,7 +8,11 @@
     "env:load": "varlock load"
   },
   "dependencies": {
+    "@elysia/bearer": "catalog:web-api",
+    "@elysia/cors": "catalog:web-api",
+    "@elysia/server-timing": "catalog:web-api",
     "elysia": "latest",
+    "logixlysia": "^6.3.2",
     "varlock": "catalog:",
     "zod": "^4.3.6"
   },
