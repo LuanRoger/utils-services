@@ -12,7 +12,7 @@
     "@elysia/cors": "catalog:web-api",
     "@elysia/server-timing": "catalog:web-api",
     "elysia": "latest",
-    "logixlysia": "^6.3.2",
+    "logixlysia": "catalog:web-api",
     "varlock": "catalog:",
     "zod": "^4.3.6"
   },
