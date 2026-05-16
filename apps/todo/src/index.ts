@@ -2,6 +2,7 @@ import bearer from "@elysia/bearer";
 import cors from "@elysia/cors";
 import serverTiming from "@elysia/server-timing";
 import { Elysia } from "elysia";
+import { rateLimit } from "elysia-rate-limit";
 import logixlysia from "logixlysia";
 import { ENV } from "varlock/env";
 import todoRoutes from "./modules/todo";
@@ -28,6 +29,12 @@ const app = new Elysia()
     cors({
       allowedHeaders: ["Content-Type", "Authorization"],
       methods: ["GET", "POST", "PUT", "PATCH", "OPTIONS"],
+    })
+  )
+  .use(
+    rateLimit({
+      duration: ENV.RATE_LIMIT_DURATION,
+      max: ENV.RATE_LIMIT_MAX,
     })
   )
   .use(serverTiming())
