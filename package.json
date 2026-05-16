@@ -25,6 +25,13 @@
       "typescript": "^6",
       "@types/bun": "latest",
       "varlock": "^0.9.0"
+    },
+    "catalogs": {
+      "web-api": {
+        "@elysia/bearer": "^1.4.4",
+        "@elysia/cors": "^1.4.2",
+        "@elysia/server-timing": "^1.4.1"
+      }
     }
   },
   "module": "index.ts",
