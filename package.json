@@ -30,7 +30,8 @@
       "web-api": {
         "@elysia/bearer": "^1.4.4",
         "@elysia/cors": "^1.4.2",
-        "@elysia/server-timing": "^1.4.1"
+        "@elysia/server-timing": "^1.4.1",
+        "logixlysia": "^6.3.2"
       }
     }
   },
