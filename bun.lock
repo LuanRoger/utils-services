@@ -51,8 +51,12 @@
       "name": "@utils/todo",
       "version": "1.0.0",
       "dependencies": {
+        "@elysia/bearer": "catalog:web-api",
+        "@elysia/cors": "catalog:web-api",
+        "@elysia/server-timing": "catalog:web-api",
         "drizzle-orm": "^1.0.0-beta.22",
         "elysia": "latest",
+        "logixlysia": "catalog:web-api",
         "varlock": "catalog:",
         "zod": "^4.3.6",
       },
@@ -391,8 +395,6 @@
     "yaml": ["yaml@2.8.3", "", { "bin": { "yaml": "bin.mjs" } }, "sha512-AvbaCLOO2Otw/lW5bmh9d/WEdcDFdQp2Z2ZUH3pX9U2ihyUY0nvLv7J6TrWowklRGPYbB/IuIMfYgxaCPg5Bpg=="],
 
     "zod": ["zod@4.4.3", "", {}, "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="],
-
-    "@utils/todo/zod": ["zod@4.3.6", "", {}, "sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg=="],
 
     "thread-stream/real-require": ["real-require@1.0.0", "", {}, "sha512-P4nbQYQfePJxRSmY+v/KINxVucm4NF3p3s7pJveMTtom52FR4YGltUQLB8idDXwDDWW+eYrWDFbuzUnjoWHF7g=="],
 

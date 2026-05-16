@@ -10,8 +10,12 @@
     "env:load": "varlock load"
   },
   "dependencies": {
+    "@elysia/bearer": "catalog:web-api",
+    "@elysia/cors": "catalog:web-api",
+    "@elysia/server-timing": "catalog:web-api",
     "drizzle-orm": "^1.0.0-beta.22",
     "elysia": "latest",
+    "logixlysia": "catalog:web-api",
     "varlock": "catalog:",
     "zod": "^4.3.6"
   },
