@@ -1,12 +1,16 @@
 import bearer from "@elysia/bearer";
 import { cors } from "@elysia/cors";
+import openapi from "@elysia/openapi";
 import serverTiming from "@elysia/server-timing";
 import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import logixlysia from "logixlysia";
 import { ENV } from "varlock";
+import z from "zod";
+import { version } from "../package.json";
 import { echoRoutes } from "./modules/echo/routes";
 
+const appName = "@utils/echo";
 const hostname = ENV.HOST || "0.0.0.0";
 const port = ENV.PORT || 8080;
 
@@ -14,7 +18,7 @@ const app = new Elysia()
   .use(
     logixlysia({
       config: {
-        service: "@utils/echo",
+        service: appName,
         showStartupMessage: true,
         startupMessageFormat: "simple",
         showContextTree: true,
@@ -27,7 +31,7 @@ const app = new Elysia()
   )
   .use(
     cors({
-      allowedHeaders: ["Content-Type", "Authorization", "RateLimit"],
+      allowedHeaders: ["Content-Type", "Authorization"],
       methods: ["GET", "OPTIONS"],
     })
   )
@@ -38,6 +42,27 @@ const app = new Elysia()
     })
   )
   .use(serverTiming())
+  .use(
+    openapi({
+      mapJsonSchema: {
+        zod: z.toJSONSchema,
+      },
+      documentation: {
+        info: {
+          title: appName,
+          version,
+        },
+        components: {
+          securitySchemes: {
+            bearerAuth: {
+              type: "http",
+              scheme: "bearer",
+            },
+          },
+        },
+      },
+    })
+  )
   .use(bearer())
   .onBeforeHandle(({ set, status, bearer }) => {
     const apiKey = ENV.API_KEY;
@@ -47,7 +72,6 @@ const app = new Elysia()
       return status("Unauthorized");
     }
   })
-  .use(echoRoutes)
-  .get("/", ({ status }) => status(200, "OK"));
+  .use(echoRoutes);
 
 app.listen({ hostname, port });
