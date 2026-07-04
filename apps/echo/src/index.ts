@@ -13,6 +13,7 @@ import { echoRoutes } from "./modules/echo/routes";
 const appName = "@utils/echo";
 const hostname = ENV.HOST || "0.0.0.0";
 const port = ENV.PORT || 8080;
+const mainServerUrl = ENV.MAIN_SERVER_URL;
 
 const app = new Elysia()
   .use(
@@ -44,14 +45,26 @@ const app = new Elysia()
   .use(serverTiming())
   .use(
     openapi({
-      mapJsonSchema: {
-        zod: z.toJSONSchema,
-      },
       documentation: {
         info: {
           title: appName,
           version,
+          description:
+            "This is a simple echo service that returns the request body back to the client.",
+          license: {
+            name: "MIT",
+          },
         },
+        servers: [
+          {
+            url: "http://localhost:8080",
+            description: "Local server",
+          },
+          {
+            url: mainServerUrl,
+            description: "Main server",
+          },
+        ],
         components: {
           securitySchemes: {
             bearerAuth: {
@@ -60,6 +73,15 @@ const app = new Elysia()
             },
           },
         },
+        openapi: "3.2.0",
+      },
+      scalar: {
+        theme: "deepSpace",
+        showOperationId: true,
+        customCss: "",
+      },
+      mapJsonSchema: {
+        zod: z.toJSONSchema,
       },
     })
   )
