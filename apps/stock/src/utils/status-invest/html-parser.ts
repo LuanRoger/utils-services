@@ -66,11 +66,13 @@ export function parseFiiPage(page: HTMLElement): FiiData {
   const lastYieldPercentageParsed = parseNumber(lastYieldPercentage);
   const lastYieldBasePriceParsed = parseNumber(lastYieldBasePrice);
   const lastYieldDateParsed = parseDate(lastYieldDate);
+  console.log(lastYieldDateParsed);
 
   const nextYieldValueParsed = parseNumber(nextYieldValue);
   const nextYieldPercentageParsed = parseNumber(nextYieldPercentage);
   const nextYieldBasePriceParsed = parseNumber(nextYieldBasePrice);
   const nextYieldDateParsed = parseDate(nextYieldDate);
+  console.log(nextYieldDateParsed);
 
   const doesHaveLastYieldData =
     lastYieldValueParsed !== undefined &&

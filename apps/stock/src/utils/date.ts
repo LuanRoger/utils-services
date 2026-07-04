@@ -1,6 +1,4 @@
-import { DATE_REGEX } from "@/constants";
-
-export function parseDate(value: string | undefined): Date | undefined {
+export function parseDate(value: string | undefined): string | undefined {
   if (!value) {
     return;
   }
@@ -20,14 +18,6 @@ export function parseDate(value: string | undefined): Date | undefined {
     return;
   }
 
-  return new Date(year, month - 1, day);
-}
-
-// biome-ignore lint/suspicious/noExplicitAny: This is a JSON reviver function that can handle any value
-export function dateReviver(_: string, value: any): any {
-  if (typeof value === "string" && DATE_REGEX.test(value)) {
-    return new Date(value);
-  }
-
-  return value;
+  const parsedDate = new Date(year, month - 1, day);
+  return parsedDate.toISOString();
 }

@@ -1,7 +1,6 @@
 import { RedisClient } from "bun";
 import { ENV } from "varlock/env";
 import { CACHE_DURATION } from "@/constants";
-import { dateReviver } from "@/utils/date";
 
 const cacheClient = new RedisClient(ENV.REDIS_URL);
 
@@ -11,7 +10,7 @@ export async function getValueCache<T>(key: string): Promise<T | null> {
     return null;
   }
 
-  const valueToReturn = JSON.parse(value, dateReviver) as T;
+  const valueToReturn = JSON.parse(value) as T;
   return valueToReturn;
 }
 
