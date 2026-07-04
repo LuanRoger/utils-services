@@ -1,11 +1,14 @@
 import Elysia from "elysia";
+import z from "zod";
 import { serialIdSchema } from "@/commons/models";
+import { TodoNotFoundError } from "../errors";
 import {
   createTodoModel,
   getAllTodosQueryModel,
   toggleTodoStatusModel,
   updateTodoModel,
 } from "../models";
+import { todoListResponseSchema, todoResponseSchema } from "../schemas";
 import {
   createTodo,
   deleteTodo,
@@ -20,11 +23,20 @@ const todoRoutes = new Elysia({ prefix: "/todos" })
     "/",
     async ({ status, query }) => {
       const result = await getAllTodos(query);
+      const parsedResult = todoListResponseSchema.parse(result);
 
-      return status("OK", result);
+      return status("OK", parsedResult);
     },
     {
+      detail: {
+        operationId: "getAllTodos",
+        description: "Get all todos",
+      },
       query: getAllTodosQueryModel,
+      response: {
+        200: todoListResponseSchema,
+        500: z.string(),
+      },
     }
   )
   .get(
@@ -33,22 +45,40 @@ const todoRoutes = new Elysia({ prefix: "/todos" })
       const { id } = params;
 
       const result = await getTodoById(id);
+      const parsedResult = todoResponseSchema.parse(result);
 
-      return status("OK", result);
+      return status("OK", parsedResult);
     },
     {
+      detail: {
+        operationId: "getTodoById",
+        description: "Get a todo by id",
+      },
       params: serialIdSchema,
+      response: {
+        200: todoResponseSchema,
+        500: z.string(),
+      },
     }
   )
   .post(
     "/",
     async ({ body, status }) => {
       const result = await createTodo(body);
+      const parsedResult = todoResponseSchema.parse(result);
 
-      return status("Created", result);
+      return status("Created", parsedResult);
     },
     {
+      detail: {
+        operationId: "createTodo",
+        description: "Create a todo",
+      },
       body: createTodoModel,
+      response: {
+        201: todoResponseSchema,
+        500: z.string(),
+      },
     }
   )
   .put(
@@ -57,33 +87,85 @@ const todoRoutes = new Elysia({ prefix: "/todos" })
       const { id } = params;
 
       const result = await updateTodo(id, body);
+      const parsedResult = todoResponseSchema.parse(result);
 
-      return status("OK", result);
+      return status("OK", parsedResult);
     },
-    { params: serialIdSchema, body: updateTodoModel }
+    {
+      detail: {
+        operationId: "updateTodo",
+        description: "Update a todo",
+      },
+      params: serialIdSchema,
+      body: updateTodoModel,
+      response: {
+        200: todoResponseSchema,
+        500: z.string(),
+      },
+    }
   )
   .patch(
     "/:id",
-    async ({ params, body, status }) => {
+    async ({ params, body, status, set }) => {
       const { id } = params;
 
-      const result = await toggleTodoStatus(id, body);
+      try {
+        const result = await toggleTodoStatus(id, body);
+        const parsedResult = todoResponseSchema.parse(result);
 
-      return status("OK", result);
+        return status("OK", parsedResult);
+      } catch (error) {
+        if (error instanceof TodoNotFoundError) {
+          set.status = 404;
+          return status("Not Found", "Not Found");
+        }
+
+        throw error;
+      }
     },
-    { params: serialIdSchema, body: toggleTodoStatusModel }
+    {
+      detail: {
+        operationId: "toggleTodoStatus",
+        description: "Toggle todo status",
+      },
+      params: serialIdSchema,
+      body: toggleTodoStatusModel,
+      response: {
+        200: todoResponseSchema,
+        404: z.literal("Not Found"),
+        500: z.string(),
+      },
+    }
   )
   .delete(
     "/:id",
-    async ({ params, status }) => {
+    async ({ params, status, set }) => {
       const { id } = params;
 
-      await deleteTodo(id);
+      try {
+        await deleteTodo(id);
 
-      return status("No Content");
+        return status("OK", id);
+      } catch (error) {
+        if (error instanceof TodoNotFoundError) {
+          set.status = 404;
+          return status("Not Found", "Not Found");
+        }
+
+        throw error;
+      }
     },
     {
+      detail: {
+        operationId: "deleteTodo",
+        description: "Delete a todo",
+      },
       params: serialIdSchema,
+      response: {
+        200: z.number().describe("ID of the deleted item"),
+        404: z.literal("Not Found"),
+        500: z.string(),
+      },
     }
   );
 

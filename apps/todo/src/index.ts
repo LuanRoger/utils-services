@@ -56,7 +56,7 @@ const app = new Elysia()
         },
         servers: [
           {
-            url: "http://localhost:8082",
+            url: "http://localhost:8081",
             description: "Local server",
           },
           {
@@ -92,7 +92,6 @@ const app = new Elysia()
       return status("Unauthorized");
     }
   })
-  .use(todoRoutes)
-  .get("/", () => "OK");
+  .use(todoRoutes);
 
 app.listen({ port, hostname });

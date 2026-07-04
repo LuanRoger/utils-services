@@ -24,7 +24,12 @@ export async function getTodoById(id: number) {
     throw new TodoNotFoundError(id);
   }
 
-  return result;
+  const transformedResult = {
+    ...result,
+    createdAt: result.createdAt.toISOString(),
+    updatedAt: result.updatedAt.toISOString(),
+  };
+  return transformedResult;
 }
 
 export async function getAllTodos(query: GetAllTodosQueryModel) {
@@ -43,8 +48,13 @@ export async function getAllTodos(query: GetAllTodosQueryModel) {
     completed: completedFilter,
     orderBy,
   });
+  const transformedResult = result.map((item) => ({
+    ...item,
+    createdAt: item.createdAt.toISOString(),
+    updatedAt: item.updatedAt.toISOString(),
+  }));
 
-  return result;
+  return transformedResult;
 }
 
 export async function createTodo(model: CreateTodoModel) {
@@ -54,7 +64,12 @@ export async function createTodo(model: CreateTodoModel) {
   }
 
   const newTodo = result[0];
-  return newTodo;
+  const transformedResult = {
+    ...newTodo,
+    createdAt: newTodo.createdAt.toISOString(),
+    updatedAt: newTodo.updatedAt.toISOString(),
+  };
+  return transformedResult;
 }
 
 export async function updateTodo(id: number, model: UpdateTodoModel) {
@@ -64,14 +79,19 @@ export async function updateTodo(id: number, model: UpdateTodoModel) {
   }
 
   const updatedTodo = result[0];
-  return updatedTodo;
+  const transformedResult = {
+    ...updatedTodo,
+    createdAt: updatedTodo.createdAt.toISOString(),
+    updatedAt: updatedTodo.updatedAt.toISOString(),
+  };
+  return transformedResult;
 }
 
 export async function toggleTodoStatus(
   id: number,
   model: ToggleTodoStatusModel
 ) {
-  const { completed } = model;
+  const { completed } = model || {};
 
   const result = await toggleTodoStatusRepository(id, completed);
   if (result.length !== 1) {
@@ -79,7 +99,12 @@ export async function toggleTodoStatus(
   }
 
   const updatedTodo = result[0];
-  return updatedTodo;
+  const transformedResult = {
+    ...updatedTodo,
+    createdAt: updatedTodo.createdAt.toISOString(),
+    updatedAt: updatedTodo.updatedAt.toISOString(),
+  };
+  return transformedResult;
 }
 
 export async function deleteTodo(id: number) {

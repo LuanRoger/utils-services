@@ -17,6 +17,8 @@ export const updateTodoModel = z.object({
   description: z.string().min(3).max(1024).optional(),
 });
 
-export const toggleTodoStatusModel = z.object({
-  completed: z.boolean().optional(),
-});
+export const toggleTodoStatusModel = z
+  .object({
+    completed: z.boolean().optional(),
+  })
+  .optional();
