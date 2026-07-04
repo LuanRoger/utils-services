@@ -11,6 +11,7 @@
     "@elysia/bearer": "catalog:web-api",
     "@elysia/cors": "catalog:web-api",
     "@elysia/server-timing": "catalog:web-api",
+    "@elysia/openapi": "catalog:web-api",
     "elysia": "latest",
     "elysia-rate-limit": "catalog:web-api",
     "logixlysia": "catalog:web-api",

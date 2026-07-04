@@ -19,6 +19,7 @@
       "dependencies": {
         "@elysia/bearer": "catalog:web-api",
         "@elysia/cors": "catalog:web-api",
+        "@elysia/openapi": "catalog:web-api",
         "@elysia/server-timing": "catalog:web-api",
         "elysia": "latest",
         "elysia-rate-limit": "catalog:web-api",
@@ -80,6 +81,7 @@
     "web-api": {
       "@elysia/bearer": "^1.4.4",
       "@elysia/cors": "^1.4.2",
+      "@elysia/openapi": "^1.4.15",
       "@elysia/server-timing": "^1.4.1",
       "elysia-rate-limit": "^4.6.2",
       "logixlysia": "^6.3.2",
@@ -117,6 +119,8 @@
     "@elysia/bearer": ["@elysia/bearer@1.4.4", "", { "peerDependencies": { "elysia": ">= 1.4.3" } }, "sha512-mYf6rj1e/N1h579udHiuvqvU0+i0O/qbKhNCSfxTln0StXztMGUX234MeiIFhbnq9sUBs37bDApy2ou8lflQUg=="],
 
     "@elysia/cors": ["@elysia/cors@1.4.2", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-dXkfo1IxZWJkJReNYnPJorJqb+XpWno0D/YWlMEJSkiFIFd751zJ4R/YswAYdo88mLWo8cycEj673o7L+gbxsw=="],
+
+    "@elysia/openapi": ["@elysia/openapi@1.4.15", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-MrVGCPo5hnRF4/yWGOyH5ddjt4DlSIbeC5rrkupQtHY8TEQe+XdJa2YM9aUOrtgtRcy4UNGyiVlLl/jllPkPQA=="],
 
     "@elysia/server-timing": ["@elysia/server-timing@1.4.1", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-+NDGhslxN0HZuyT8o4dt+hgib9bzsMuvxTE5bPrDhFFRl1duCNosseW3wE76pmwle8+m9+1aOeZ28mZAv51ggQ=="],
 
