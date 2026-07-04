@@ -13,6 +13,10 @@ app.get(
   {
     query: echoQuery,
     response: echoResponse,
+    detail: {
+      summary: "Echo text",
+      description: "It will echo the text you provide back to you.",
+    },
   }
 );
 
