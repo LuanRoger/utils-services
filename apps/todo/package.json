@@ -13,6 +13,7 @@
     "@elysia/bearer": "catalog:web-api",
     "@elysia/cors": "catalog:web-api",
     "@elysia/server-timing": "catalog:web-api",
+    "@elysia/openapi": "catalog:web-api",
     "drizzle-orm": "^1.0.0-beta.22",
     "elysia": "latest",
     "elysia-rate-limit": "catalog:web-api",

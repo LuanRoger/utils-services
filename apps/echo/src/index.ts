@@ -1,20 +1,25 @@
 import bearer from "@elysia/bearer";
 import { cors } from "@elysia/cors";
+import openapi from "@elysia/openapi";
 import serverTiming from "@elysia/server-timing";
 import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import logixlysia from "logixlysia";
 import { ENV } from "varlock";
+import z from "zod";
+import { version } from "../package.json";
 import { echoRoutes } from "./modules/echo/routes";
 
+const appName = "@utils/echo";
 const hostname = ENV.HOST || "0.0.0.0";
 const port = ENV.PORT || 8080;
+const mainServerUrl = ENV.MAIN_SERVER_URL;
 
 const app = new Elysia()
   .use(
     logixlysia({
       config: {
-        service: "@utils/echo",
+        service: appName,
         showStartupMessage: true,
         startupMessageFormat: "simple",
         showContextTree: true,
@@ -27,7 +32,7 @@ const app = new Elysia()
   )
   .use(
     cors({
-      allowedHeaders: ["Content-Type", "Authorization", "RateLimit"],
+      allowedHeaders: ["Content-Type", "Authorization"],
       methods: ["GET", "OPTIONS"],
     })
   )
@@ -38,6 +43,48 @@ const app = new Elysia()
     })
   )
   .use(serverTiming())
+  .use(
+    openapi({
+      documentation: {
+        info: {
+          title: appName,
+          version,
+          description:
+            "This is a simple echo service that returns the request body back to the client.",
+          license: {
+            name: "MIT",
+          },
+        },
+        servers: [
+          {
+            url: "http://localhost:8080",
+            description: "Local server",
+          },
+          {
+            url: mainServerUrl,
+            description: "Main server",
+          },
+        ],
+        components: {
+          securitySchemes: {
+            bearerAuth: {
+              type: "http",
+              scheme: "bearer",
+            },
+          },
+        },
+        openapi: "3.2.0",
+      },
+      scalar: {
+        theme: "deepSpace",
+        showOperationId: true,
+        customCss: "",
+      },
+      mapJsonSchema: {
+        zod: z.toJSONSchema,
+      },
+    })
+  )
   .use(bearer())
   .onBeforeHandle(({ set, status, bearer }) => {
     const apiKey = ENV.API_KEY;
@@ -47,7 +94,6 @@ const app = new Elysia()
       return status("Unauthorized");
     }
   })
-  .use(echoRoutes)
-  .get("/", ({ status }) => status(200, "OK"));
+  .use(echoRoutes);
 
 app.listen({ hostname, port });
