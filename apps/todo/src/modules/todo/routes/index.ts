@@ -1,10 +1,11 @@
 import Elysia from "elysia";
 import { serialIdSchema } from "@/commons/models";
 import {
-  TodoCreationError,
-  TodoNotFoundError,
-  TodoUpdateError,
-} from "./errors";
+  createTodoModel,
+  getAllTodosQueryModel,
+  toggleTodoStatusModel,
+  updateTodoModel,
+} from "../models";
 import {
   createTodo,
   deleteTodo,
@@ -12,13 +13,7 @@ import {
   getTodoById,
   toggleTodoStatus,
   updateTodo,
-} from "./handlers";
-import {
-  createTodoModel,
-  getAllTodosQueryModel,
-  toggleTodoStatusModel,
-  updateTodoModel,
-} from "./models";
+} from "../use-cases";
 
 const todoRoutes = new Elysia({ prefix: "/todos" })
   .get(
@@ -38,9 +33,6 @@ const todoRoutes = new Elysia({ prefix: "/todos" })
       const { id } = params;
 
       const result = await getTodoById(id);
-      if (!result) {
-        throw new TodoNotFoundError(id);
-      }
 
       return status("OK", result);
     },
@@ -52,12 +44,8 @@ const todoRoutes = new Elysia({ prefix: "/todos" })
     "/",
     async ({ body, status }) => {
       const result = await createTodo(body);
-      if (result.length !== 1) {
-        throw new TodoCreationError();
-      }
 
-      const newTodo = result[0];
-      return status("Created", newTodo);
+      return status("Created", result);
     },
     {
       body: createTodoModel,
@@ -69,12 +57,8 @@ const todoRoutes = new Elysia({ prefix: "/todos" })
       const { id } = params;
 
       const result = await updateTodo(id, body);
-      if (result.length !== 1) {
-        throw new TodoUpdateError(id);
-      }
 
-      const updatedTodo = result[0];
-      return status("OK", updatedTodo);
+      return status("OK", result);
     },
     { params: serialIdSchema, body: updateTodoModel }
   )
@@ -84,12 +68,8 @@ const todoRoutes = new Elysia({ prefix: "/todos" })
       const { id } = params;
 
       const result = await toggleTodoStatus(id, body);
-      if (result.length !== 1) {
-        throw new TodoUpdateError(id);
-      }
 
-      const updatedTodo = result[0];
-      return status("OK", updatedTodo);
+      return status("OK", result);
     },
     { params: serialIdSchema, body: toggleTodoStatusModel }
   )
@@ -97,11 +77,6 @@ const todoRoutes = new Elysia({ prefix: "/todos" })
     "/:id",
     async ({ params, status }) => {
       const { id } = params;
-
-      const existingTodo = await getTodoById(id);
-      if (!existingTodo) {
-        throw new TodoNotFoundError(id);
-      }
 
       await deleteTodo(id);
 

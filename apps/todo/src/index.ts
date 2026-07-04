@@ -5,7 +5,7 @@ import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import logixlysia from "logixlysia";
 import { ENV } from "varlock/env";
-import todoRoutes from "./modules/todo";
+import todoRoutes from "./modules/todo/routes";
 
 const port = ENV.PORT || 8081;
 const hostname = ENV.HOST || "0.0.0.0";
