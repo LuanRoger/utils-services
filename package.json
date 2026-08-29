@@ -34,7 +34,8 @@
         "@elysia/server-timing": "^1.4.1",
         "@elysia/openapi": "^1.4.15",
         "elysia-rate-limit": "^4.6.2",
-        "logixlysia": "^6.3.2"
+        "logixlysia": "^6.3.2",
+        "hono": "^4.13.5"
       }
     }
   }
