@@ -8,7 +8,3 @@ export const echoQuery = z.object({
     .max(maxEchoTextLenght)
     .describe("Text to echo"),
 });
-
-export const echoResponse = z.object({
-  text: z.string().describe("Echoed text"),
-});

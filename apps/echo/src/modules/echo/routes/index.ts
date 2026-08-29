@@ -1,23 +1,13 @@
-import Elysia from "elysia";
-import { echoQuery, echoResponse } from "../schemas";
+import { zValidator } from "@hono/zod-validator";
+import { Hono } from "hono";
+import { echoQuery } from "../schemas";
 
-const app = new Elysia({ prefix: "/echo" });
+const app = new Hono();
 
-app.get(
-  "/",
-  ({ query, status }) => {
-    const text = query.text;
+app.get("/", zValidator("query", echoQuery), (c) => {
+  const text = c.req.valid("query");
 
-    return status(200, { text });
-  },
-  {
-    query: echoQuery,
-    response: echoResponse,
-    detail: {
-      summary: "Echo text",
-      description: "It will echo the text you provide back to you.",
-    },
-  }
-);
+  return c.json({ text });
+});
 
 export { app as echoRoutes };
