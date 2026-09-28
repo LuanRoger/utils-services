@@ -8,15 +8,15 @@
     "cf-typegen": "varlock-wrangler types --env-interface CloudflareBindings"
   },
   "dependencies": {
-    "@hono/zod-validator": "^0.9.0",
-    "@varlock/cloudflare-integration": "^1.5.0",
+    "@hono/zod-validator": "catalog:web-utils",
+    "@varlock/cloudflare-integration": "catalog:web-api",
     "hono": "catalog:web-api",
     "varlock": "catalog:",
-    "zod": "^4.3.6"
+    "zod": "catalog:web-utils"
   },
   "devDependencies": {
     "@types/node": "^26.4.0",
     "typescript": "catalog:",
-    "wrangler": "^4.127.1"
+    "wrangler": "catalog:web-api"
   }
 }
