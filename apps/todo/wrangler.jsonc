@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "todo",
+  "name": "utils-services-todo",
   "main": "src/index.ts",
   "compatibility_date": "2026-08-25",
   "compatibility_flags": [
