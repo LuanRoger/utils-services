@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "varlock-wrangler dev --port 8080",
     "deploy": "varlock-wrangler deploy --minify",
-    "cf-typegen": "varlock-wrangler types --env-interface CloudflareBindings"
+    "cf-typegen": "varlock-wrangler types --env-interface CloudflareBindings",
+    "env:load": "varlock load"
   },
   "dependencies": {
     "@hono/zod-validator": "catalog:web-utils",
