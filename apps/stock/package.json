@@ -4,20 +4,14 @@
   "scripts": {
     "dev": "varlock-wrangler dev --port 8082",
     "deploy": "varlock-wrangler deploy --minify",
-    "cf-typegen": "varlock-wrangler types --env-interface CloudflareBindings"
+    "cf-typegen": "varlock-wrangler types --env-interface CloudflareBindings",
+    "env:load": "varlock load"
   },
   "dependencies": {
     "@hono/zod-validator": "catalog:web-utils",
     "@varlock/cloudflare-integration": "catalog:web-api",
     "hono": "catalog:web-api",
-    "@elysia/bearer": "catalog:web-api",
-    "@elysia/cors": "catalog:web-api",
-    "@elysia/server-timing": "catalog:web-api",
-    "@elysia/openapi": "catalog:web-api",
-    "elysia": "^1.4.28",
-    "elysia-rate-limit": "catalog:web-api",
     "node-html-parser": "^7.0.1",
-    "logixlysia": "catalog:web-api",
     "varlock": "catalog:",
     "zod": "catalog:web-utils"
   },
