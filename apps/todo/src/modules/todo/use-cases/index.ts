@@ -40,10 +40,15 @@ export async function getAllTodos(
   const { page, pageSize, completed, orderBy } = query;
 
   let completedFilter: boolean | undefined;
-  if (completed === "true") {
-    completedFilter = true;
-  } else if (completed === "false") {
-    completedFilter = false;
+  switch (completed) {
+    case "true":
+      completedFilter = true;
+      break;
+    case "false":
+      completedFilter = false;
+      break;
+    default:
+      completedFilter = undefined;
   }
 
   const result = await getAllTodosRepository(db, {

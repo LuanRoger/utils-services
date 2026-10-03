@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { EmptyFilter, eq } from "drizzle-orm";
 import { todo } from "@/db/schemas/todo";
 import type { DatabaseBinding } from "@/db/types";
 import { TodoNotFoundError } from "../errors";
@@ -24,7 +24,7 @@ export async function getAllTodos(
 
   return await db.query.todo.findMany({
     where: {
-      completed,
+      completed: completed ?? EmptyFilter,
     },
     orderBy: { [orderBy || "createdAt"]: "desc" },
     offset: page ? (page - 1) * pageSize : undefined,
@@ -49,28 +49,26 @@ export async function toggleTodoStatus(
   id: number,
   completed?: boolean
 ) {
-  return await db.transaction(async (tx) => {
-    const existingTodo = await tx.query.todo.findFirst({
-      where: {
-        id,
-      },
-    });
-
-    if (!existingTodo) {
-      throw new TodoNotFoundError(id);
-    }
-
-    const currentStatus = existingTodo.completed;
-    const newStatus = completed === undefined ? !currentStatus : completed;
-
-    const updatedTodo = await tx
-      .update(todo)
-      .set({ completed: newStatus })
-      .where(eq(todo.id, id))
-      .returning();
-
-    return updatedTodo;
+  const existingTodo = await db.query.todo.findFirst({
+    where: {
+      id,
+    },
   });
+
+  if (!existingTodo) {
+    throw new TodoNotFoundError(id);
+  }
+
+  const currentStatus = existingTodo.completed;
+  const newStatus = completed === undefined ? !currentStatus : completed;
+
+  const updatedTodo = await db
+    .update(todo)
+    .set({ completed: newStatus })
+    .where(eq(todo.id, id))
+    .returning();
+
+  return updatedTodo;
 }
 
 export async function deleteTodoById(db: DatabaseBinding, id: number) {
