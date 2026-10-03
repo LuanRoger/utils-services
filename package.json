@@ -33,13 +33,7 @@
         "zod": "^4.3.6"
       },
       "web-api": {
-        "@elysia/bearer": "^1.4.4",
-        "@elysia/cors": "^1.4.2",
-        "@elysia/server-timing": "^1.4.1",
-        "@elysia/openapi": "^1.4.15",
         "@varlock/cloudflare-integration": "^1.5.0",
-        "elysia-rate-limit": "^4.6.2",
-        "logixlysia": "^6.3.2",
         "hono": "^4.13.5",
         "wrangler": "^4.127.1"
       }
