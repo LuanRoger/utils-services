@@ -1,19 +1,16 @@
-import {
-  boolean,
-  pgTable,
-  serial,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const todo = pgTable("todo", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 256 }).notNull(),
-  description: varchar("description", { length: 1024 }),
-  completed: boolean("completed").notNull().default(false),
-  createdAt: timestamp("createdAt").notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt")
+export const todo = sqliteTable("todo", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  title: text("title").notNull(),
+  description: text("description"),
+  completed: integer("completed", { mode: "boolean" }).notNull().default(false),
+  createdAt: integer("createdAt", { mode: "timestamp" })
     .notNull()
-    .defaultNow()
+    .default(sql`(unixepoch())`),
+  updatedAt: integer("updatedAt", { mode: "timestamp" })
+    .notNull()
+    .default(sql`(unixepoch())`)
     .$onUpdateFn(() => new Date()),
 });

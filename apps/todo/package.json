@@ -2,7 +2,7 @@
   "name": "@utils/todo",
   "version": "1.0.0",
   "scripts": {
-    "dev": "varlock-wrangler dev --port 8081",
+    "dev": "varlock-wrangler dev --port 8081 --remote",
     "deploy": "varlock-wrangler deploy --minify",
     "cf-typegen": "varlock-wrangler types --env-interface CloudflareBindings",
     "db:generate": "varlock run -- drizzle-kit generate",
