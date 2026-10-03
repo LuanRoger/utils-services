@@ -3,14 +3,8 @@
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "types": [
-      "./worker-configuration.d.ts",
-      "./env.d.ts",
-      "node"
-    ],
-    "lib": [
-      "ESNext"
-    ],
+    "types": ["./worker-configuration.d.ts", "./env.d.ts", "node"],
+    "lib": ["ESNext"],
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,

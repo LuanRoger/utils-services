@@ -44,5 +44,6 @@
         "wrangler": "^4.127.1"
       }
     }
-  }
+  },
+  "packageManager": "bun@1.4.2"
 }

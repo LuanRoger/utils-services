@@ -1,9 +1,13 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "extends": ["ultracite/biome/core"],
+  "vcs": {
+    "useIgnoreFile": true,
+    "clientKind": "git"
+  },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!**/*.d.ts"]
+    "includes": ["**", "!**/*.d.ts", "!**/drizzle"]
   },
   "linter": {
     "rules": {

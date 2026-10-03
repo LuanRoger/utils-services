@@ -3,9 +3,7 @@
   "name": "utils-services-stock",
   "main": "src/index.ts",
   "compatibility_date": "2026-08-25",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
   "kv_namespaces": [
     {
       "binding": "KV",
