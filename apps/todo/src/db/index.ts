@@ -1,11 +1,6 @@
-import { SQL } from "bun";
-import { drizzle } from "drizzle-orm/bun-sql";
-import { ENV } from "varlock/env";
+import { drizzle } from "drizzle-orm/d1";
 import { relations } from "./relations";
 
-const client = new SQL({
-  url: ENV.DATABASE_URL,
-  idleTimeout: 10,
-  connectionTimeout: 30,
-});
-export const db = drizzle({ client, relations });
+export function getDbConnection(c: CloudflareBindings) {
+  return drizzle(c.DB, { relations });
+}

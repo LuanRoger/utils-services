@@ -2,25 +2,21 @@
   "name": "@utils/stock",
   "version": "1.0.0",
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "start": "varlock run -- bun run dist/index.js",
-    "build": "bun build src/index.ts --target bun --outdir dist",
+    "dev": "varlock-wrangler dev --port 8082",
+    "deploy": "varlock-wrangler deploy --minify",
+    "cf-typegen": "varlock-wrangler types --env-interface CloudflareBindings",
     "env:load": "varlock load"
   },
   "dependencies": {
-    "@elysia/bearer": "catalog:web-api",
-    "@elysia/cors": "catalog:web-api",
-    "@elysia/server-timing": "catalog:web-api",
-    "@elysia/openapi": "catalog:web-api",
-    "elysia": "^1.4.28",
-    "elysia-rate-limit": "catalog:web-api",
+    "@hono/zod-validator": "catalog:web-utils",
+    "@varlock/cloudflare-integration": "catalog:web-api",
+    "hono": "catalog:web-api",
     "node-html-parser": "^7.0.1",
-    "logixlysia": "catalog:web-api",
     "varlock": "catalog:",
-    "zod": "^4.4.3"
+    "zod": "catalog:web-utils"
   },
   "devDependencies": {
     "typescript": "catalog:",
-    "@types/bun": "^1.3.13"
+    "wrangler": "catalog:web-api"
   }
 }
