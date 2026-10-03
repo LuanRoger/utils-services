@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db } from "@/db";
 import { todo } from "@/db/schemas/todo";
+import type { DatabaseBinding } from "@/db/types";
 import { TodoNotFoundError } from "../errors";
 import type {
   GetAllTodosFilter,
@@ -8,7 +8,7 @@ import type {
   UpdateTodoData,
 } from "./types";
 
-export async function getTodoById(id: number) {
+export async function getTodoById(db: DatabaseBinding, id: number) {
   return await db.query.todo.findFirst({
     where: {
       id,
@@ -16,7 +16,10 @@ export async function getTodoById(id: number) {
   });
 }
 
-export async function getAllTodos(filter: GetAllTodosFilter) {
+export async function getAllTodos(
+  db: DatabaseBinding,
+  filter: GetAllTodosFilter
+) {
   const { page, pageSize, completed, orderBy } = filter;
 
   return await db.query.todo.findMany({
@@ -29,15 +32,23 @@ export async function getAllTodos(filter: GetAllTodosFilter) {
   });
 }
 
-export async function createTodo(data: InsertTodoData) {
+export async function createTodo(db: DatabaseBinding, data: InsertTodoData) {
   return await db.insert(todo).values(data).returning();
 }
 
-export async function updateTodoById(id: number, data: UpdateTodoData) {
+export async function updateTodoById(
+  db: DatabaseBinding,
+  id: number,
+  data: UpdateTodoData
+) {
   return await db.update(todo).set(data).where(eq(todo.id, id)).returning();
 }
 
-export async function toggleTodoStatus(id: number, completed?: boolean) {
+export async function toggleTodoStatus(
+  db: DatabaseBinding,
+  id: number,
+  completed?: boolean
+) {
   return await db.transaction(async (tx) => {
     const existingTodo = await tx.query.todo.findFirst({
       where: {
@@ -62,6 +73,6 @@ export async function toggleTodoStatus(id: number, completed?: boolean) {
   });
 }
 
-export async function deleteTodoById(id: number) {
+export async function deleteTodoById(db: DatabaseBinding, id: number) {
   return await db.delete(todo).where(eq(todo.id, id));
 }

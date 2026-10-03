@@ -4,8 +4,11 @@ import { ENV } from "varlock/env";
 export default defineConfig({
   out: "./drizzle",
   schema: "./src/db/schemas",
-  dialect: "postgresql",
+  dialect: "sqlite",
+  driver: "d1-http",
   dbCredentials: {
-    url: ENV.DATABASE_URL,
+    accountId: ENV.CLOUDFLARE_ACCOUNT_ID,
+    databaseId: ENV.CLOUDFLARE_DATABASE_ID,
+    token: ENV.CLOUDFLARE_D1_TOKEN,
   },
 });

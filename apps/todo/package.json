@@ -2,11 +2,12 @@
   "name": "@utils/todo",
   "version": "1.0.0",
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "start": "bun run dist/index.js",
-    "build": "bun build src/index.ts --target bun --outdir dist",
+    "dev": "varlock-wrangler dev --port 8081",
+    "deploy": "varlock-wrangler deploy --minify",
+    "cf-typegen": "varlock-wrangler types --env-interface CloudflareBindings",
+    "db:generate": "varlock run -- drizzle-kit generate",
+    "db:migrate": "varlock run -- drizzle-kit migrate",
     "db:push": "varlock run -- drizzle-kit push",
-    "db:studio": "varlock run -- drizzle-kit studio",
     "env:load": "varlock load"
   },
   "dependencies": {
@@ -14,17 +15,20 @@
     "@elysia/cors": "catalog:web-api",
     "@elysia/server-timing": "catalog:web-api",
     "@elysia/openapi": "catalog:web-api",
+    "@hono/zod-validator": "catalog:web-utils",
+    "@varlock/cloudflare-integration": "catalog:web-api",
     "drizzle-orm": "^1.0.0-beta.22",
     "elysia": "latest",
     "elysia-rate-limit": "catalog:web-api",
+    "hono": "catalog:web-api",
     "logixlysia": "catalog:web-api",
     "varlock": "catalog:",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/bun": "catalog:",
-    "drizzle-kit": "^1.0.0-beta.22",
-    "pg": "^8.20.0",
-    "typescript": "catalog:"
+    "@types/node": "^26.6.3",
+    "drizzle-kit": "^1.0.0-rc.5",
+    "typescript": "catalog:",
+    "wrangler": "catalog:web-api"
   }
 }

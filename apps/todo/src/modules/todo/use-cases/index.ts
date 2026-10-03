@@ -1,3 +1,4 @@
+import type { DatabaseBinding } from "@/db/types";
 import {
   TodoCreationError,
   TodoNotFoundError,
@@ -18,8 +19,8 @@ import {
   updateTodoById as updateTodoByIdRepository,
 } from "../repository";
 
-export async function getTodoById(id: number) {
-  const result = await getTodoByIdRepository(id);
+export async function getTodoById(db: DatabaseBinding, id: number) {
+  const result = await getTodoByIdRepository(db, id);
   if (!result) {
     throw new TodoNotFoundError(id);
   }
@@ -32,7 +33,10 @@ export async function getTodoById(id: number) {
   return transformedResult;
 }
 
-export async function getAllTodos(query: GetAllTodosQueryModel) {
+export async function getAllTodos(
+  db: DatabaseBinding,
+  query: GetAllTodosQueryModel
+) {
   const { page, pageSize, completed, orderBy } = query;
 
   let completedFilter: boolean | undefined;
@@ -42,7 +46,7 @@ export async function getAllTodos(query: GetAllTodosQueryModel) {
     completedFilter = false;
   }
 
-  const result = await getAllTodosRepository({
+  const result = await getAllTodosRepository(db, {
     page,
     pageSize,
     completed: completedFilter,
@@ -57,8 +61,8 @@ export async function getAllTodos(query: GetAllTodosQueryModel) {
   return transformedResult;
 }
 
-export async function createTodo(model: CreateTodoModel) {
-  const result = await createTodoRepository(model);
+export async function createTodo(db: DatabaseBinding, model: CreateTodoModel) {
+  const result = await createTodoRepository(db, model);
   if (result.length !== 1) {
     throw new TodoCreationError();
   }
@@ -72,8 +76,12 @@ export async function createTodo(model: CreateTodoModel) {
   return transformedResult;
 }
 
-export async function updateTodo(id: number, model: UpdateTodoModel) {
-  const result = await updateTodoByIdRepository(id, model);
+export async function updateTodo(
+  db: DatabaseBinding,
+  id: number,
+  model: UpdateTodoModel
+) {
+  const result = await updateTodoByIdRepository(db, id, model);
   if (result.length !== 1) {
     throw new TodoUpdateError(id);
   }
@@ -88,12 +96,13 @@ export async function updateTodo(id: number, model: UpdateTodoModel) {
 }
 
 export async function toggleTodoStatus(
+  db: DatabaseBinding,
   id: number,
   model: ToggleTodoStatusModel
 ) {
   const { completed } = model || {};
 
-  const result = await toggleTodoStatusRepository(id, completed);
+  const result = await toggleTodoStatusRepository(db, id, completed);
   if (result.length !== 1) {
     throw new TodoUpdateError(id);
   }
@@ -107,11 +116,11 @@ export async function toggleTodoStatus(
   return transformedResult;
 }
 
-export async function deleteTodo(id: number) {
-  const todoToDelete = await getTodoByIdRepository(id);
+export async function deleteTodo(db: DatabaseBinding, id: number) {
+  const todoToDelete = await getTodoByIdRepository(db, id);
   if (!todoToDelete) {
     throw new TodoNotFoundError(id);
   }
 
-  await deleteTodoByIdRepository(id);
+  await deleteTodoByIdRepository(db, id);
 }

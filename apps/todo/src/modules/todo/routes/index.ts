@@ -1,6 +1,7 @@
-import Elysia from "elysia";
-import z from "zod";
+import { zValidator } from "@hono/zod-validator";
+import { Hono } from "hono";
 import { serialIdSchema } from "@/commons/models";
+import { getDbConnection } from "@/db";
 import { TodoNotFoundError } from "../errors";
 import {
   createTodoModel,
@@ -18,155 +19,100 @@ import {
   updateTodo,
 } from "../use-cases";
 
-const todoRoutes = new Elysia({ prefix: "/todos" })
-  .get(
-    "/",
-    async ({ status, query }) => {
-      const result = await getAllTodos(query);
-      const parsedResult = todoListResponseSchema.parse(result);
+const todoRoutes = new Hono<{ Bindings: CloudflareBindings }>();
 
-      return status("OK", parsedResult);
-    },
-    {
-      detail: {
-        operationId: "getAllTodos",
-        description: "Get all todos",
-      },
-      query: getAllTodosQueryModel,
-      response: {
-        200: todoListResponseSchema,
-        500: z.string(),
-      },
-    }
-  )
-  .get(
-    "/:id",
-    async ({ params, status }) => {
-      const { id } = params;
+todoRoutes.get("/", zValidator("query", getAllTodosQueryModel), async (c) => {
+  const query = c.req.valid("query");
+  const db = getDbConnection(c.env);
 
-      const result = await getTodoById(id);
+  const result = await getAllTodos(db, query);
+  const parsedResult = todoListResponseSchema.parse(result);
+
+  c.status(200);
+  return c.json(parsedResult);
+});
+
+todoRoutes.get("/:id", zValidator("param", serialIdSchema), async (c) => {
+  const { id } = c.req.valid("param");
+  const db = getDbConnection(c.env);
+
+  const result = await getTodoById(db, id);
+  const parsedResult = todoResponseSchema.parse(result);
+
+  c.status(200);
+  return c.json(parsedResult);
+});
+
+todoRoutes.post("/", zValidator("json", createTodoModel), async (c) => {
+  const body = c.req.valid("json");
+  const db = getDbConnection(c.env);
+
+  const result = await createTodo(db, body);
+  const parsedResult = todoResponseSchema.parse(result);
+
+  c.status(201);
+  return c.json(parsedResult);
+});
+
+todoRoutes.put(
+  "/:id",
+  zValidator("param", serialIdSchema),
+  zValidator("json", updateTodoModel),
+  async (c) => {
+    const { id } = c.req.valid("param");
+    const body = c.req.valid("json");
+    const db = getDbConnection(c.env);
+
+    const result = await updateTodo(db, id, body);
+    const parsedResult = todoResponseSchema.parse(result);
+
+    c.status(200);
+    return c.json(parsedResult);
+  }
+);
+
+todoRoutes.patch(
+  "/:id",
+  zValidator("json", toggleTodoStatusModel),
+  zValidator("param", serialIdSchema),
+  async (c) => {
+    const { id } = c.req.valid("param");
+    const body = c.req.valid("json");
+    const db = getDbConnection(c.env);
+
+    try {
+      const result = await toggleTodoStatus(db, id, body);
       const parsedResult = todoResponseSchema.parse(result);
 
-      return status("OK", parsedResult);
-    },
-    {
-      detail: {
-        operationId: "getTodoById",
-        description: "Get a todo by id",
-      },
-      params: serialIdSchema,
-      response: {
-        200: todoResponseSchema,
-        500: z.string(),
-      },
-    }
-  )
-  .post(
-    "/",
-    async ({ body, status }) => {
-      const result = await createTodo(body);
-      const parsedResult = todoResponseSchema.parse(result);
-
-      return status("Created", parsedResult);
-    },
-    {
-      detail: {
-        operationId: "createTodo",
-        description: "Create a todo",
-      },
-      body: createTodoModel,
-      response: {
-        201: todoResponseSchema,
-        500: z.string(),
-      },
-    }
-  )
-  .put(
-    "/:id",
-    async ({ params, body, status }) => {
-      const { id } = params;
-
-      const result = await updateTodo(id, body);
-      const parsedResult = todoResponseSchema.parse(result);
-
-      return status("OK", parsedResult);
-    },
-    {
-      detail: {
-        operationId: "updateTodo",
-        description: "Update a todo",
-      },
-      params: serialIdSchema,
-      body: updateTodoModel,
-      response: {
-        200: todoResponseSchema,
-        500: z.string(),
-      },
-    }
-  )
-  .patch(
-    "/:id",
-    async ({ params, body, status, set }) => {
-      const { id } = params;
-
-      try {
-        const result = await toggleTodoStatus(id, body);
-        const parsedResult = todoResponseSchema.parse(result);
-
-        return status("OK", parsedResult);
-      } catch (error) {
-        if (error instanceof TodoNotFoundError) {
-          set.status = 404;
-          return status("Not Found", "Not Found");
-        }
-
-        throw error;
+      c.status(200);
+      return c.json(parsedResult);
+    } catch (error) {
+      if (error instanceof TodoNotFoundError) {
+        c.status(404);
+        return c.text("Not Found");
       }
-    },
-    {
-      detail: {
-        operationId: "toggleTodoStatus",
-        description: "Toggle todo status",
-      },
-      params: serialIdSchema,
-      body: toggleTodoStatusModel,
-      response: {
-        200: todoResponseSchema,
-        404: z.literal("Not Found"),
-        500: z.string(),
-      },
+
+      throw error;
     }
-  )
-  .delete(
-    "/:id",
-    async ({ params, status, set }) => {
-      const { id } = params;
+  }
+);
 
-      try {
-        await deleteTodo(id);
+todoRoutes.delete("/:id", zValidator("param", serialIdSchema), async (c) => {
+  const { id } = c.req.valid("param");
+  const db = getDbConnection(c.env);
 
-        return status("OK", id);
-      } catch (error) {
-        if (error instanceof TodoNotFoundError) {
-          set.status = 404;
-          return status("Not Found", "Not Found");
-        }
+  try {
+    await deleteTodo(db, id);
 
-        throw error;
-      }
-    },
-    {
-      detail: {
-        operationId: "deleteTodo",
-        description: "Delete a todo",
-      },
-      params: serialIdSchema,
-      response: {
-        200: z.number().describe("ID of the deleted item"),
-        404: z.literal("Not Found"),
-        500: z.string(),
-      },
+    return c.json(id);
+  } catch (error) {
+    if (error instanceof TodoNotFoundError) {
+      c.status(404);
+      return c.text("Not Found");
     }
-  );
+
+    throw error;
+  }
+});
 
 export default todoRoutes;

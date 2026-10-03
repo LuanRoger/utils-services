@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "todo",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-25",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "utils-services-todo",
+      "database_id": "5a8b53ee-b23b-4ccb-8108-2919b2d2d08a",
+      "migrations_dir": "drizzle/migrations"
+    }
+  ]
+}
