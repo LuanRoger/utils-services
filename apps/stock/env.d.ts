@@ -3,6 +3,10 @@
 // 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑
 // @ts-nocheck
 /* eslint-disable */
+
+// NOTE: the `process.env` augmentation was skipped because worker-configuration.d.ts
+// already declares NodeJS.ProcessEnv, and two declarations of it cannot both apply.
+// Use `ENV` for the full types, or set `processEnv=strict` on @generateTsTypes to override.
 export type CoercedEnvSchema = {
   /**
    * **API_KEY** 🔐 _sensitive_  
@@ -22,8 +26,8 @@ declare module 'varlock/env' {
 
 export type EnvSchemaAsStrings = {
   [Property in keyof CoercedEnvSchema]:
-    CoercedEnvSchema[Property] extends string ? CoercedEnvSchema[Property]
-      : (CoercedEnvSchema[Property] extends boolean ? ('true' | 'false') : string)
+    NonNullable<CoercedEnvSchema[Property]> extends string ? NonNullable<CoercedEnvSchema[Property]>
+      : (NonNullable<CoercedEnvSchema[Property]> extends boolean ? ('true' | 'false') : string)
 };
 
 type _EnvSchemaAsStrings_b5895801 = EnvSchemaAsStrings;
@@ -33,10 +37,5 @@ declare global {
   interface ImportMetaEnv extends _EnvSchemaAsStrings_b5895801 {}
   interface ImportMeta {
     readonly env: ImportMetaEnv;
-  }
-
-  // add types for global process.env
-  namespace NodeJS {
-    interface ProcessEnv extends _EnvSchemaAsStrings_b5895801 {}
   }
 }
