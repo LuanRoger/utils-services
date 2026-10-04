@@ -22,7 +22,7 @@ app.get("/:id", zValidator("param", getFiByIdSchema), async (c) => {
     const fi = await getFiagroByIdUseCase(fiId);
     const parsedResponse = getFiagroByIdResponse.parse(fi);
 
-    c.env.KV.put(cacheKey, JSON.stringify(parsedResponse), {
+    await c.env.KV.put(cacheKey, JSON.stringify(parsedResponse), {
       expirationTtl: FI_CACHE_DURATION,
     });
     c.status(200);
